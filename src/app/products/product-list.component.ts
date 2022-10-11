@@ -1,4 +1,4 @@
-import { Product } from './../types/product.type';
+import { Product } from './../shared/types/product.type';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -13,6 +13,7 @@ export class ProductListComponent implements OnInit {
   imageWidth: number = 50;
   imageMargin: number = 2;
   showImage: boolean = false;
+  ratingClicked: string = '';
 
   get listFilter(): string {
     return this._listFilter;
@@ -93,5 +94,9 @@ export class ProductListComponent implements OnInit {
         product.productName.toLocaleLowerCase().includes(filterBy) ||
         product.productCode.toLocaleLowerCase().includes(filterBy)
     );
+  }
+
+  onNotify(message: string): void {
+    this.ratingClicked = message;
   }
 }

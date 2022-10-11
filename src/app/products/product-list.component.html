@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-header">{{ pageTitle }}</div>
+  <div class="card-header">{{ pageTitle }} {{ ratingClicked }}</div>
   <div class="card-body">
     <div class="row">
       <div class="col-md-2">Filter-by:</div>
@@ -47,7 +47,7 @@
             <td>
               {{ product.price | currency: "EUR":"symbol":"1.2-2" | lowercase }}
             </td>
-            <td>{{ product.starRating }}</td>
+            <td><app-star [rating]="product.starRating" (notify)="onNotify($event)"></app-star></td>
           </tr>
         </tbody>
 
