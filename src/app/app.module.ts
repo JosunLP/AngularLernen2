@@ -11,6 +11,7 @@ import { ConvertToSpacesPipe } from './shared/pipes/convertToSpaces.pipe';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProductDetailGuard } from './shared/guards/product-detail.guard';
 
 @NgModule({
   declarations: [
@@ -22,13 +23,22 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     WelcomeComponent,
     PageNotFoundComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot([
-    { path: 'products', component: ProductListComponent },
-    { path: 'products/:id', component: ProductDetailComponent },
-    { path: 'welcome', component: WelcomeComponent },
-    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-    { path: '**', component: PageNotFoundComponent },
-  ])],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: 'products', component: ProductListComponent },
+      {
+        path: 'products/:id',
+        component: ProductDetailComponent,
+        canActivate: [ProductDetailGuard],
+      },
+      { path: 'welcome', component: WelcomeComponent },
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: '**', component: PageNotFoundComponent },
+    ]),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
