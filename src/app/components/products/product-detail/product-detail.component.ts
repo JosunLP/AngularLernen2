@@ -1,7 +1,9 @@
+import { ProductService } from './../../../shared/services/product.service';
 import { Product } from './../../../shared/types/product.type';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StarComponent } from '../../star/star.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -11,29 +13,35 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductDetailComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Product Detail';
   private paramsSubscription!: Subscription;
+  products: Product[] = [];
   product: Product | undefined;
+  errorMessage: string = 'Could not load products';
+  sub!: Subscription;
+  id: number = 0;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router, private productService: ProductService) {}
 
   ngOnInit(): void {
+
     this.paramsSubscription = this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      this.pageTitle += `: ${id}`;
-      this.product = {
-        productId: 1,
-        productName: 'Leaf Rake',
-        productCode: 'GDN-0011',
-        releaseDate: 'March 19, 2021',
-        description: 'Leaf rake with 48-inch wooden handle.',
-        price: 19.95,
-        starRating: 3.2,
-        imageUrl: 'assets/images/leaf_rake.png',
-      };
+      this.id = Number(params.get('id'));
+      this.pageTitle += `: ${this.id}`;
     });
+
+    this.sub = this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+        this.product = this.products.find((p) => p.productId === this.id);
+      },
+      error: (err) => (this.errorMessage = err),
+      complete: () => console.log('Completed'),
+    });
+
   }
 
   ngOnDestroy(): void {
     this.paramsSubscription.unsubscribe();
+    this.sub.unsubscribe();
   }
 
   onBack(): void {
