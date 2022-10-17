@@ -1,4 +1,4 @@
-import { Product } from './../../shared/types/product.type';
+import { Product } from './../../../shared/types/product.type';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';

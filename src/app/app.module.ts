@@ -1,40 +1,21 @@
-import { WelcomeComponent } from './home/welcome.component';
+import { RouterModule } from '@angular/router';
+import { WelcomeComponent } from './components/home/welcome.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { StarComponent } from './shared/star/star.component';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
-import { ProductListComponent } from './products/product-list.component';
-import { ConvertToSpacesPipe } from './shared/pipes/convertToSpaces.pipe';
-import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import { RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProductDetailGuard } from './shared/guards/product-detail.guard';
+import { ProductModule } from './modules/product.module';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProductListComponent,
-    ConvertToSpacesPipe,
-    StarComponent,
-    ProductDetailComponent,
-    WelcomeComponent,
-    PageNotFoundComponent,
-  ],
+  declarations: [AppComponent, WelcomeComponent],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
+    ProductModule,
     RouterModule.forRoot([
-      { path: 'products', component: ProductListComponent },
-      {
-        path: 'products/:id',
-        component: ProductDetailComponent,
-        canActivate: [ProductDetailGuard],
-      },
       { path: 'welcome', component: WelcomeComponent },
+      { path: '404', component: PageNotFoundComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent },
     ]),
