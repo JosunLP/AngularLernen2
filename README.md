@@ -1,6 +1,7 @@
 # AngularLernen2
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.4.
+This repository is based on the [Angular: Getting Started](https://app.pluralsight.com/library/courses/angular-2-getting-started-update/table-of-contents) course by [Deborah Kurata](https://github.com/DeborahK) on Pluralsight.
+Some tweaks were made in the form of style changes and additions of missing features, as well as the restructuring of the code for better overview.
 
 ## Development server
 
